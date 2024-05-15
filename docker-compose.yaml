@@ -1,0 +1,55 @@
+services:
+  medical-record-DB:
+    image: postgres:15.7-bookworm
+    env_file: ./medical_record_db/.env
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456789
+    restart: always
+    volumes: 
+      - app-data:/var/lib/postgresql/data
+      - ./medical_record_db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - '5432:5432'
+  
+  analytic-DB:
+    image: postgres:15.7-bookworm
+    env_file: ./analytic_db/.env
+    restart: always
+    volumes: 
+      - analytic-data:/var/lib/postgresql/data
+      - ./analytic_db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - '5433:5432'
+
+  medical-record-app:
+    build: ./medical_record_app
+    env_file: ./medical_record_db/.env
+    volumes: 
+      - ./medical_record_app:/app
+    environment:
+      - FLASK_APP=medicalrecordAPI.py
+      - FLASK_ENV=development
+    ports:
+      - '5000:5000'
+    depends_on:
+      - medical-record-DB
+
+  prefect:
+    container_name: prefect
+    build: ./prefect
+    env_file: ./prefect/.env
+    restart: always
+    volumes:
+      - ./prefect:/root/.prefect
+    entrypoint: ["prefect", "server", "start"]
+    environment:
+      - PREFECT_SERVER_API_HOST=0.0.0.0
+    ports:
+      - '4200:4200'
+volumes:
+  prefect:
+  app-data:
+    driver: local
+  analytic-data:
+    driver: local
