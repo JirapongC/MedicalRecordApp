@@ -31,5 +31,5 @@ This project showcases capability to craft RESTful API with Flask to handle medi
 6. Once the initialAppData.py is executed, monitor the execution status in the Prefect UI by accessing http://localhost:4200 on your web browser.
 7. Run the data pipeline job to load data from the application database to the medical_record_denormalized table in the analytic DB by executing `docker exec -it prefect python /root/.prefect/loadAnalyticDB.py`.
 8. Once the loadAnalyticDB.py is executed, check the execution status in Prefect UI by accessing http://localhost:4200 on your web browser.
-9. Verify if the medical_record_denormalized table has been loaded by executing `docker exec -it analytic-DB psql psql -U postgres -d postgres` to access psql prompt and then executing `select * from analytic.medical_record_denormalized;`.
+9. Verify if the medical_record_denormalized table has been loaded by executing `docker exec -it analytic-DB psql -U postgres -d postgres` to access psql prompt and then executing `select * from analytic.medical_record_denormalized;`.
 10. Execute `docker compose down` to stop all containers.
