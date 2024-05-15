@@ -25,7 +25,7 @@ This project showcases capability to craft RESTful API with Flask to handle medi
 ## __Running Instructions__
 1. Open your terminal and navigate to the root directory of the project.
 2. Execute `docker compose up -d` in your terminal to start all services.
-3. Confirm that all services are running by executing by executing `docker ps`. There should be 4 services running.
+3. Confirm that all services are running by executing `docker ps`. There should be 4 services running.
 4. After all services are started, you can test the API using the Postman collection located in the postman_collection directory.
 5. Import sample data to the application database by executing `docker exec -it prefect python /root/.prefect/initialAppData.py`.
 6. Once the initialAppData.py is executed, monitor the execution status in the Prefect UI by accessing http://localhost:4200 on your web browser.
