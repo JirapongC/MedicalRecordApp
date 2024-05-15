@@ -23,7 +23,7 @@ This project showcases capability to craft RESTful API with Flask to handle medi
 ![Analytic DB ERD](AnalyticDB_ERD.jpeg)
 
 ## __Running Instructions__
-- __Prerequisite:__ Ensure Docker is installed on your machine. 
+__Prerequisite:__ Ensure Docker is installed on your machine. 
 1. Open your terminal and navigate to the root directory of the project.
 2. Execute `docker compose up -d` in your terminal to start all services.
 3. Confirm that all services are running by executing `docker ps`. There should be 4 services running.
