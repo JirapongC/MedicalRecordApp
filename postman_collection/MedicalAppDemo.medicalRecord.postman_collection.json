@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "861f7f1e-b677-444e-be45-86973b1d3ae7",
+		"name": "MedicalAppDemo.medicalRecord",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1926292"
+	},
+	"item": [
+		{
+			"name": "get medical records",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/medicalrecord",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"medicalrecord"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get medical records by patient ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/medicalrecord/3",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"medicalrecord",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add medical record",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n            \"patientID\": 4,\r\n            \"hospitalName\": \"Payathai\",\r\n            \"doctorFullName\": \"X Japan\",\r\n            \"treatmentStartDate\": \"2024-05-09\",\r\n            \"treatmentEndDate\": \"2024-05-10\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/medicalrecord",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"medicalrecord"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update medical record",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "       {\r\n            \"medicalRecordID\": 1,\r\n            \"patientID\": 1,\r\n            \"hospitalName\": \"Payathai\",\r\n            \"doctorFullName\": \"Dr. Z\",\r\n            \"diagnosis\": \"COVID-19\",\r\n            \"symtom\": \"Fever\",\r\n            \"treatmentStartDate\": \"2024-05-09\",\r\n            \"treatmentEndDate\": \"2024-05-10\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/medicalrecord/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"medicalrecord",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "add patient positive case",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n        {\r\n            \"idCardNum\": \"123456789012\",\r\n            \"firstName\": \"Ik\",\r\n            \"lastName\": \"YoYo\",\r\n            \"birthDate\": \"1984-08-10\",\r\n            \"phoneNum\": \"12346789\"\r\n        }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/patient/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"patient",
+								"2"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/3.0.3 Python/3.12.3"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 10 May 2024 13:46:08 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "43"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Patient updated successfully\"\n}"
+				}
+			]
+		},
+		{
+			"name": "delete medical record",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/medicalrecord/4",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"medicalrecord",
+						"4"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

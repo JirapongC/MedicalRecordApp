@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "f219bb8a-27d2-436b-86ef-4dc70bd068b8",
+		"name": "MedicalAppDemo.patient",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1926292"
+	},
+	"item": [
+		{
+			"name": "get patient",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/patient",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"patient"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get patient by ID card",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/patient/1101700007473",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"patient",
+						"1101700007473"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add patient",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n        {\r\n            \"idCardNum\": \"123456789012\",\r\n            \"firstName\": \"Ik\",\r\n            \"lastName\": \"Test\",\r\n            \"birthDate\": \"1984-08-10\",\r\n            \"phoneNum\": \"081123467\"\r\n        }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/patient",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"patient"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update patient",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n        {\r\n            \"idCardNum\": \"1101700007479\",\r\n            \"firstName\": \"Ik\",\r\n            \"lastName\": \"YoYo\",\r\n            \"birthDate\": \"1984-08-10\",\r\n            \"phoneNum\": \"12346789\"\r\n        }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/patient/3",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"patient",
+						"3"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "add patient positive case",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n        {\r\n            \"idCardNum\": \"123456789012\",\r\n            \"firstName\": \"Ik\",\r\n            \"lastName\": \"YoYo\",\r\n            \"birthDate\": \"1984-08-10\",\r\n            \"phoneNum\": \"12346789\"\r\n        }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/patient/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"patient",
+								"2"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/3.0.3 Python/3.12.3"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 10 May 2024 13:46:08 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "43"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Patient updated successfully\"\n}"
+				}
+			]
+		},
+		{
+			"name": "delete patient",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/patient/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"patient",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

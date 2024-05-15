@@ -1,5 +1,6 @@
 services:
   medical-record-DB:
+    container_name: app-DB
     image: postgres:15.7-bookworm
     env_file: ./medical_record_db/.env
     environment:
@@ -13,6 +14,7 @@ services:
       - '5432:5432'
   
   analytic-DB:
+    container_name: analytic-DB
     image: postgres:15.7-bookworm
     env_file: ./analytic_db/.env
     restart: always
