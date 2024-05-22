@@ -1,6 +1,7 @@
 import os
 from prefect import flow, task
 from prefect_shell import ShellOperation
+from sling import Sling
 
 appPostgresUser = os.getenv('APP_POSTGRES_USER')
 appPostgresPwd = os.getenv('APP_POSTGRES_PASSWORD')
@@ -18,73 +19,49 @@ appCommand='PGPASSWORD='+appPostgresPwd+' psql -h '+appPostgresHost+' -U '+appPo
 analyticCommand='PGPASSWORD='+analyticPostgresPwd+' psql -h '+analyticPostgresHost+' -U '+analyticPostgresUser+' -d '+analyticPostgresDB+' '
 
 @task
-def exportPatient():
-    with ShellOperation(
-    commands=[appCommand + '''-c "\copy (SELECT * FROM medical_app.patient) TO '/root/.prefect/patient.csv' WITH CSV HEADER;"'''],
-    ) as PSQLCommand:
-        PSQLCommand = PSQLCommand.trigger()
-        PSQLCommand.wait_for_completion()
-        PSQLOutput = PSQLCommand.fetch_result()
-        print(PSQLOutput)
+def loadSTGPatient():
+    config = {
+      'source': {
+        'conn': 'APP_DB_CONNECTION',
+        'stream': "medical_app.patient",
+      },
+      'target': {
+        'conn':  "ANALYTIC_DB_CONNECTION",
+        'object':  "stg.stg_patient",
+      },
+      'mode': 'full-refresh'
+    }
+    Sling(**config).run()
 
 @task
-def exportMedicalRecord():
-    with ShellOperation(
-    commands=[appCommand + ''' -c "\copy (SELECT * FROM medical_app.medical_record) TO '/root/.prefect/medicalRecord.csv' WITH CSV HEADER;"'''],
-    ) as PSQLCommand:
-        PSQLCommand = PSQLCommand.trigger()
-        PSQLCommand.wait_for_completion()
-        PSQLOutput = PSQLCommand.fetch_result()
-        print(PSQLOutput)
+def loadSTGMedicalRecord():
+    config = {
+      'source': {
+        'conn': 'APP_DB_CONNECTION',
+        'stream': "medical_app.medical_record",
+      },
+      'target': {
+        'conn':  "ANALYTIC_DB_CONNECTION",
+        'object':  "stg.stg_medical_record",
+      },
+      'mode': 'full-refresh'
+    }
+    Sling(**config).run()
 
 @task
-def exportPrescription():
-    with ShellOperation(
-    commands=[appCommand + ''' -c "\copy (SELECT * FROM medical_app.prescription) TO '/root/.prefect/prescription.csv' WITH CSV HEADER;"'''],
-    ) as PSQLCommand:
-        PSQLCommand = PSQLCommand.trigger()
-        PSQLCommand.wait_for_completion()
-        PSQLOutput = PSQLCommand.fetch_result()
-        print(PSQLOutput)
-
-@task
-def loadAnalyticSTGPatient():
-    with ShellOperation(
-    commands=[
-        analyticCommand + ''' -c "truncate table stg.stg_patient;"'''
-        ,analyticCommand + ''' -c "\copy stg.stg_patient FROM '/root/.prefect/patient.csv' WITH CSV HEADER;"'''
-        ],
-       ) as PSQLCommand:
-        PSQLCommand = PSQLCommand.trigger()
-        PSQLCommand.wait_for_completion()
-        PSQLOutput = PSQLCommand.fetch_result()
-        print(PSQLOutput)
-
-@task
-def loadAnalyticSTGMedicalRecord():
-    with ShellOperation(
-    commands=[
-        analyticCommand + ''' -c "truncate table stg.stg_medical_record;"'''
-        ,analyticCommand + ''' -c "\copy stg.stg_medical_record FROM '/root/.prefect/medicalRecord.csv' WITH CSV HEADER;"'''
-        ],
-       ) as PSQLCommand:
-        PSQLCommand = PSQLCommand.trigger()
-        PSQLCommand.wait_for_completion()
-        PSQLOutput = PSQLCommand.fetch_result()
-        print(PSQLOutput)
-
-@task
-def loadAnalyticSTGPrescription():
-    with ShellOperation(
-    commands=[
-        analyticCommand + ''' -c "truncate table stg.stg_prescription;"'''
-        ,analyticCommand + ''' -c "\copy stg.stg_prescription FROM '/root/.prefect/prescription.csv' WITH CSV HEADER;"'''
-        ],
-       ) as PSQLCommand:
-        PSQLCommand = PSQLCommand.trigger()
-        PSQLCommand.wait_for_completion()
-        PSQLOutput = PSQLCommand.fetch_result()
-        print(PSQLOutput)
+def loadSTGPrescription():
+    config = {
+      'source': {
+        'conn': 'APP_DB_CONNECTION',
+        'stream': "medical_app.prescription",
+      },
+      'target': {
+        'conn':  "ANALYTIC_DB_CONNECTION",
+        'object':  "stg.stg_prescription",
+      },
+      'mode': 'full-refresh'
+    }
+    Sling(**config).run()
 
 @task
 def populateMedicalRecordDenormalized():
@@ -100,12 +77,9 @@ def populateMedicalRecordDenormalized():
 
 @flow(log_prints=True)
 def loadAnalyticDB():
-    exportPatient()
-    exportMedicalRecord()
-    exportPrescription()
-    loadAnalyticSTGPatient()
-    loadAnalyticSTGMedicalRecord()
-    loadAnalyticSTGPrescription()
+    loadSTGPatient()
+    loadSTGMedicalRecord()
+    loadSTGPrescription()
     populateMedicalRecordDenormalized()
 
 if __name__ == "__main__":

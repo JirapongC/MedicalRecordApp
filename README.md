@@ -8,6 +8,7 @@ This project showcases capability to craft RESTful API with Flask to handle medi
 - PostgreSQL: Database management system.
 - Docker: Containerization technology for seamless deployment.
 - Prefect: Data orchestrator utilized to showcase the creation of data pipelines, ensuring efficient data flow management.
+- Sling: Running Extract & Load tasks.
 
 ## __Data Model__
 ### __Application Data Model__
